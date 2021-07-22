@@ -6,22 +6,31 @@ package cl.ucn.disc.dsm.sarancibia.newsapi.model;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.ZonedDateTime;
 
 /**
- * The class.
+ * The News Model.
  *
  * @author Sebastian Arancibia
  */
-@Builder
+@Builder // The Builder pattern
+@Getter // All the fields has get*
+@NoArgsConstructor // Add empty constructor
+@Entity // The JPA
 public final class News {
 
     /**
      * Unique id.
      */
-    @Getter
-    private final Long id;
+    @Id
+    @GeneratedValue(strategy =  GenerationType.AUTO)
+    private Long id;
 
     /**
      *  The title.
@@ -29,50 +38,42 @@ public final class News {
      *  - not nulls.
      *  - size > 2
      */
-    @Getter
-    private final String title;
+    private String title;
 
     /**
      * The source.
      */
-    @Getter
-    private final String source;
+    private String source;
 
     /**
      * The author.
      */
-    @Getter
-    private final String author;
+    private String author;
 
     /**
      * The Url.
      */
-    @Getter
-    private final String url;
+    private String url;
 
     /**
      * The Url Image.
      */
-    @Getter
-    private final String urlImage;
+    private String urlImage;
 
     /**
      * The Description.
      */
-    @Getter
-    private final String description;
+    private String description;
 
     /**
      * The Content.
      */
-    @Getter
-    private final String content;
+    private String content;
 
     /**
      * The Date of Publish
      */
-    @Getter
-    private final ZonedDateTime publishedAt;
+    private ZonedDateTime publishedAt;
 
     /**
      * The Constructor.

@@ -4,14 +4,13 @@
 
 package cl.ucn.disc.dsm.sarancibia.newsapi;
 
+import cl.ucn.disc.dsm.sarancibia.newsapi.exceptions.NewsNotFoundException;
 import cl.ucn.disc.dsm.sarancibia.newsapi.model.News;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,30 +23,26 @@ import java.util.List;
 public class NewsController {
 
     /**
+     * The Repo of News
+     */
+    private final NewsRepository newsRepository;
+
+    /**
+     * The Constructor
+     * @param newsRepository the repo to use
+     */
+    public NewsController(NewsRepository newsRepository) {
+        this.newsRepository = newsRepository;
+    }
+
+    /**
      *
-     * @return the lsit news in the backend
+     * @return the list news in the backend
      */
     @GetMapping("/v1/news")
     public List<News> all (){
-
-        final List<News> theNews = new ArrayList<>();
-
-        for (int i = 0; i< 10 ;i++){
-            theNews.add(News.builder()
-                    .id(-1L)
-                    .author("Sebastián")
-                    .title("Titulo")
-                    .description("descripcion")
-                    .source("source")
-                    .content("contenido")
-                    .url("url")
-                    .urlImage("urlImage")
-                    .publishedAt(ZonedDateTime.now())
-                    .build()
-            );
-        }
-
-        return theNews;
+        // Get all the News.
+        return this.newsRepository.findAll();
     }
 
     /**
@@ -57,17 +52,6 @@ public class NewsController {
      */
     @GetMapping("/v1/news/{id}")
     public News one(@PathVariable final Long id){
-        //TODO: Get the NEws from DB.
-        return News.builder()
-                .id(-1L)
-                .author("Sebastián")
-                .title("Titulo")
-                .description("descripcion")
-                .source("source")
-                .content("contenido")
-                .url("url")
-                .urlImage("urlImage")
-                .publishedAt(ZonedDateTime.now())
-                .build();
+        return this.newsRepository.findById(id).orElseThrow(() -> new NewsNotFoundException("News Not Found"));
     }
 }

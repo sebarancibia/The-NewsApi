@@ -23,12 +23,20 @@ repositories {
 }
 
 dependencies {
-	//implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// Data Access Object (Hibernate 5.x)
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	// The Database: https://github.com/xerial/sqlite-jdbc
+	runtimeOnly 'org.xerial:sqlite-jdbc:3.36.0.1'
+	// The Dialect: https://github.com/ZsoltFabok/sqlite-dialect
+	runtimeOnly 'com.zsoltfabok:sqlite-dialect:1.0'
+
+	// Lombok: https://projectlombok.org/
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 }
 
 test {
