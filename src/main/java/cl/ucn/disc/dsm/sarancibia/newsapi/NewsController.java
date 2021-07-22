@@ -40,9 +40,17 @@ public class NewsController {
      * @return the list news in the backend
      */
     @GetMapping("/v1/news")
-    public List<News> all (){
-        // Get all the News.
-        return this.newsRepository.findAll();
+    public NewsResponse all (){
+
+        // Hit the backend.
+        final List<News> news = this.newsRepository.findAll();
+
+        // Return all the News.
+        return NewsResponse.builder()
+                .status("ok")
+                .totalResult(news.size())
+                .articles(news)
+                .build();
     }
 
     /**

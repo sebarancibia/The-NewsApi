@@ -5,6 +5,7 @@
 package cl.ucn.disc.dsm.sarancibia.newsapi;
 
 import cl.ucn.disc.dsm.sarancibia.newsapi.model.News;
+import cl.ucn.disc.dsm.sarancibia.newsapi.model.Source;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -50,7 +51,7 @@ public class TheNewsApiApplication {
                     .content("Contenido de la noticia")
                     .author("autor noticia")
                     .publishedAt(ZonedDateTime.now())
-                    .source("Propio")
+                    .source(new Source("Propio"))
                     .url("Url de la noticia")
                     .urlImage("https://marvel-b1-cdn.bc0a.com/f00000000104050/www.monsterenergy.com/media/uploads_image/2020/12/02/auto/800/9e2a664d1cff74f6d14d554352395810.png?mod=v1_2d0b5ce4d957fe51acf6bd5da0d9a2a5")
                     .build()

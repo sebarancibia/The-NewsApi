@@ -4,14 +4,12 @@
 
 package cl.ucn.disc.dsm.sarancibia.newsapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.ZonedDateTime;
 
 /**
@@ -30,6 +28,7 @@ public final class News {
      */
     @Id
     @GeneratedValue(strategy =  GenerationType.AUTO)
+    @JsonIgnore // Remove from the conversion to SJON.
     private Long id;
 
     /**
@@ -43,7 +42,8 @@ public final class News {
     /**
      * The source.
      */
-    private String source;
+    @Embedded
+    private Source source;
 
     /**
      * The author.
@@ -90,7 +90,7 @@ public final class News {
     public News(
             final Long id,
             final String title,
-            final String source,
+            final Source source,
             final String author,
             final String url,
             final String urlImage,
@@ -107,10 +107,10 @@ public final class News {
         if (source == null){
             throw new IllegalArgumentException("Source was null");
         }
-        if (source.length() < 2 ){
-            throw new IllegalArgumentException("Source size < 2 [" + source + "]");
+        if (source.getName().length() < 2 ){
+            throw new IllegalArgumentException("Source size < 2 [" + source.getName() + "]");
         }
-        this.source =source;
+        this.source = source;
 
         //Author
         this.author = (author != null && author.length() > 0) ? author : "No Author";
